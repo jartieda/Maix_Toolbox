@@ -9,7 +9,9 @@ to the freezed .pb tensorflow weight file. The resultant TensorFlow model
 holds both the model architecture and its associated weights.
 """
 
-import tensorflow as tf
+#import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 from tensorflow.python.framework import graph_util
 from tensorflow.python.framework import graph_io
 from pathlib import Path
@@ -145,7 +147,7 @@ def main(args):
     logging.info('Converted output node names are: %s',
                  str(converted_output_node_names))
 
-    sess = K.get_session()
+    sess = tf.keras.backend.get_session()
     if FLAGS.output_meta_ckpt:
         saver = tf.train.Saver()
         saver.save(sess, str(output_fld / output_model_stem))
